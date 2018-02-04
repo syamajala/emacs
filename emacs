@@ -373,7 +373,7 @@
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (define-key web-mode-map (kbd "C-c @ C-c") 'web-mode-fold-or-unfold)
 
-;; cuda
+;; vue
 (add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode))
 
 ;; dumb-jump
@@ -384,6 +384,7 @@
 
 ;; ess-site
 (require 'ess-site)
+(setq ess-default-style 'RStudio)
 
 ;; gc-cons
 (defun my-minibuffer-setup-hook ()
