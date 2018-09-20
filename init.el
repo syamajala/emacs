@@ -9,7 +9,7 @@
  '(elpy-shell-echo-input nil)
  '(ffap-machine-p-known (quote reject))
  '(global-linum-mode t)
- '(helm-dash-browser-func (quote w3m))
+ '(helm-dash-browser-func (quote eww))
  '(helm-make-build-dir "/build")
  '(helm-swoop-split-with-multiple-windows t)
  '(linum-format "%d ")
@@ -117,8 +117,12 @@
 
 ;; lua
 (autoload 'lua-mode "lua-mode" "Lua editing mode." t)
-(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
 (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
+
+;; regent
+(add-to-list 'load-path "~/.emacs.d/elpa/regent-mode/")
+(autoload 'regent-mode "regent-mode" "regent editing mode" t)
+(add-to-list 'auto-mode-alist '("\\.rg$" . regent-mode))
 
 ;; gdb
 (setq gdb-many-windows t
@@ -127,9 +131,6 @@
 ;; sml
 (setq sml/theme 'respectful)
 (sml/setup)
-
-;; x10
-(add-to-list 'auto-mode-alist '("\\.x10\\'" . java-mode))
 
 ;; cuda
 (add-to-list 'auto-mode-alist '("\\.cu\\'" . c++-mode))
@@ -337,17 +338,14 @@
 (require 'helm-flycheck)
 
 ;; helm-dash
-;; (setq helm-dash-common-docsets '("Python 3" "C++"))
-(defun python-doc ()
-  (interactive)
-  (setq-local helm-dash-docsets '("Python 3")))
-(add-hook 'python-mode-hook 'python-doc)
+(setq helm-dash-common-docsets '("Python 3" "C++"))
 
 
 ;; projectile
 (projectile-global-mode)
 (setq projectile-completion-system 'helm)
 (helm-projectile-on)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 ;; hs-minor-mode
 (add-hook 'c-mode-common-hook 'hs-minor-mode)
