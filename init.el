@@ -18,7 +18,7 @@
  '(org-org-htmlized-css-url "static/worg.css")
  '(package-selected-packages
    (quote
-    (helm-c-yasnippet yasnippet-snippets markdown-mode cl-lib ess csv-mode ace-window dumb-jump helm-descbinds vue-mode nodejs-repl js2-mode company-tern w3m helm-dash web-mode ws-butler window-number window-layout which-key test-simple swiper stickyfunc-enhance sr-speedbar smartparens smart-mode-line rainbow-delimiters pythonic malinka magit lua-mode loc-changes load-relative list-utils latex-preview-pane irony-eldoc htmlize hlinum helm-themes helm-swoop helm-projectile helm-make helm-ls-git helm-flycheck helm-ag google-c-style flycheck-irony elpy dtrt-indent cython-mode company-irony-c-headers company-irony cmake-ide cmake-font-lock clean-aindent-mode clang-format browse-kill-ring auctex)))
+    (window-numbering helm-c-yasnippet yasnippet-snippets markdown-mode cl-lib ess csv-mode ace-window dumb-jump helm-descbinds vue-mode nodejs-repl js2-mode company-tern w3m helm-dash web-mode ws-butler window-layout which-key test-simple swiper stickyfunc-enhance sr-speedbar smartparens smart-mode-line rainbow-delimiters pythonic malinka magit lua-mode loc-changes load-relative list-utils latex-preview-pane irony-eldoc htmlize hlinum helm-themes helm-swoop helm-projectile helm-make helm-ls-git helm-flycheck helm-ag google-c-style flycheck-irony elpy dtrt-indent cython-mode company-irony-c-headers company-irony cmake-ide cmake-font-lock clean-aindent-mode clang-format browse-kill-ring auctex)))
  '(rm-blacklist
    (quote
     (" hl-p" " SP" " Abbrev" " FA" " hs" " Helm" " wb" " WK" " yas" " company" " Irony" " ElDoc" " FlyC")))
@@ -28,7 +28,8 @@
      (cmake-ide-build-dir . "/home/seshu/dev/bioswarm++/build")
      (cmake-ide-build-dir . "/home/seshu/dev/cppweb/build")
      (cmake-ide-build-dir . "/home/seshu/dev/NumericalMethods/build"))))
- '(sml/vc-mode-show-backend t))
+ '(sml/vc-mode-show-backend t)
+ '(window-numbering-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -53,7 +54,8 @@
  '(rainbow-delimiters-depth-4-face ((t (:foreground "green"))))
  '(rainbow-delimiters-depth-5-face ((t (:foreground "magenta"))))
  '(rainbow-delimiters-depth-7-face ((t (:foreground "cyan"))))
- '(region ((t (:background "brightblack")))))
+ '(region ((t (:background "brightblack"))))
+ '(window-numbering-face ((t (:foreground "brightred"))) t))
 
 ;; no menu or welcome
 (menu-bar-mode -1)
@@ -105,9 +107,10 @@
 (global-set-key (kbd "C-c \\") 'toggle-window-split)
 
 ;; window number
-(require 'window-number)
-(window-number-mode 1)
-(window-number-meta-mode 1)
+(window-numbering-mode)
+;; (require 'window-number)
+;; (window-number-mode 1)
+;; (window-number-meta-mode 1)
 
 ;; hlinum
 (require 'hlinum)
