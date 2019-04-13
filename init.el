@@ -18,7 +18,7 @@
  '(org-org-htmlized-css-url "static/worg.css")
  '(package-selected-packages
    (quote
-    (eyebrowse window-numbering helm-c-yasnippet yasnippet-snippets markdown-mode cl-lib ess csv-mode dumb-jump helm-descbinds vue-mode nodejs-repl js2-mode company-tern w3m helm-dash web-mode ws-butler window-layout which-key test-simple swiper stickyfunc-enhance sr-speedbar smartparens smart-mode-line rainbow-delimiters pythonic malinka magit lua-mode loc-changes load-relative list-utils latex-preview-pane irony-eldoc htmlize hlinum helm-themes helm-swoop helm-projectile helm-make helm-ls-git helm-flycheck helm-ag google-c-style flycheck-irony elpy dtrt-indent cython-mode company-irony-c-headers company-irony cmake-ide cmake-font-lock clean-aindent-mode clang-format browse-kill-ring auctex)))
+    (ccls lsp-python company-lsp dap-mode helm-lsp lsp-ui eyebrowse window-numbering helm-c-yasnippet yasnippet-snippets markdown-mode cl-lib ess csv-mode dumb-jump helm-descbinds vue-mode nodejs-repl js2-mode company-tern w3m helm-dash web-mode ws-butler window-layout which-key test-simple swiper stickyfunc-enhance sr-speedbar smartparens smart-mode-line rainbow-delimiters pythonic malinka magit lua-mode loc-changes load-relative list-utils latex-preview-pane htmlize hlinum helm-themes helm-swoop helm-projectile helm-make helm-ls-git helm-flycheck helm-ag google-c-style dtrt-indent cython-mode cmake-ide cmake-font-lock clean-aindent-mode clang-format browse-kill-ring auctex)))
  '(rm-blacklist
    (quote
     (" hl-p" " SP" " Abbrev" " FA" " hs" " Helm" " wb" " WK" " yas" " company" " Irony" " ElDoc" " FlyC")))
@@ -208,18 +208,6 @@ middle"
 (setq c-default-style "bsd")
 (setq-default c-basic-offset 2)
 
-;; rtags
-(require 'rtags)
-(require 'company-rtags)
-(require 'flycheck-rtags)
-(require 'helm-rtags)
-
-(setq rtags-autostart-diagnostics t)
-(rtags-diagnostics)
-(setq rtags-completions-enabled t)
-(setq rtags-display-result-backend 'helm)
-(rtags-enable-standard-keybindings)
-
 ;; cmake-ide
 (cmake-ide-setup)
 
@@ -236,45 +224,45 @@ middle"
        '(("\\.cmake\\'" . cmake-mode))
        auto-mode-alist))
 
+;; lsp
+(require 'lsp-mode)
+
+;; lsp-ui
+(require 'lsp-ui)
+
+;; lsp-hooks
+(add-hook 'lsp-mode-hook 'lsp-ui-mode)
+
+(add-hook 'python-mode-hook #'lsp)
+(add-hook 'c++-mode-hook #'lsp)
+(add-hook 'c-mode-hook #'lsp)
+
 ;; cmake-font-lock
 (add-hook 'cmake-mode-hook 'cmake-font-lock-activate)
 
-;; irony
-(add-hook 'c++-mode-hook 'irony-mode)
-(add-hook 'c-mode-hook 'irony-mode)
-(add-hook 'objc-mode-hook 'irony-mode)
+;; ccls
+(require 'ccls)
+(setq ccls-executable "/usre/bin/ccls")
 
-(defun my-irony-mode-hook ()
-  (define-key irony-mode-map [remap completion-at-point]
-    'irony-completion-at-point-async)
-  (define-key irony-mode-map [remap complete-symbol]
-    'irony-completion-at-point-async))
-
-(add-hook 'irony-mode-hook 'my-irony-mode-hook)
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-(add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
 
 ;; company
-(require 'company-irony-c-headers)
+(require 'company)
+(require 'company-lsp)
 (add-hook 'after-init-hook 'global-company-mode)
 
 (setq company-idle-delay 0)
 
-(define-key c-mode-map [(tab)] 'company-complete)
-(define-key c++-mode-map [(tab)] 'company-complete)
+;; (define-key c-mode-map [(tab)] 'company-complete)
+;; (define-key c++-mode-map [(tab)] 'company-complete)
 (setq company-backends (delete 'company-semantic company-backends))
 (eval-after-load 'company
   '(add-to-list
-    'company-backends '(company-irony-c-headers company-irony company-rtags company-yasnippet company-tern)))
+    'company-backends '(company-lsp company-yasnippet company-tern)))
 
 ;; flycheck-mode
+(add-hook 'python-mode-hook 'flycheck-mode)
 (add-hook 'c++-mode-hook 'flycheck-mode)
 (add-hook 'c-mode-hook 'flycheck-mode)
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
-
-;; eldoc
-(add-hook 'irony-mode-hook 'irony-eldoc)
 
 ;; whitespace
 ;; (global-set-key (kbd "C-c w") 'whitespace-mode)
@@ -409,7 +397,6 @@ middle"
 ;; helm-dash
 (setq helm-dash-common-docsets '("Python 3" "C++"))
 
-
 ;; projectile
 (projectile-global-mode)
 (setq projectile-completion-system 'helm)
@@ -452,16 +439,15 @@ middle"
 (setq helm-yas-space-match-any-greedy t)
 (global-set-key (kbd "C-c y") 'helm-yas-complete)
 
-
 ;; python
-(package-initialize)
-(elpy-enable)
+;; (package-initialize)
+;; (elpy-enable)
 ;; python2
 ;; (setq python-shell-interpreter "ipython2")
 ;; (setq elpy-rpc-python-command "python2")
 ;;python3
 ;;(elpy-use-ipython)
-(setq python-shell-interpreter "ipython" python-shell-interpreter-args "--simple-prompt --pprint")
+;; (setq python-shell-interpreter "ipython" python-shell-interpreter-args "--simple-prompt --pprint")
 
 ;; rainbow delimiters
 (require 'rainbow-delimiters)
