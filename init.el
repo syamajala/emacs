@@ -18,7 +18,7 @@
  '(org-org-htmlized-css-url "static/worg.css")
  '(package-selected-packages
    (quote
-    (eyebrowse window-numbering helm-c-yasnippet yasnippet-snippets markdown-mode cl-lib ess csv-mode dumb-jump helm-descbinds vue-mode nodejs-repl js2-mode company-tern w3m helm-dash web-mode ws-butler window-layout which-key test-simple swiper stickyfunc-enhance sr-speedbar smartparens smart-mode-line rainbow-delimiters pythonic malinka magit lua-mode loc-changes load-relative list-utils latex-preview-pane irony-eldoc htmlize hlinum helm-themes helm-swoop helm-projectile helm-make helm-ls-git helm-flycheck helm-ag google-c-style flycheck-irony elpy dtrt-indent cython-mode company-irony-c-headers company-irony cmake-ide cmake-font-lock clean-aindent-mode clang-format browse-kill-ring auctex)))
+    (eyebrowse window-numbering helm-c-yasnippet yasnippet-snippets markdown-mode cl-lib ess csv-mode dumb-jump helm-descbinds vue-mode nodejs-repl js2-mode company-tern w3m helm-dash web-mode ws-butler window-layout which-key test-simple swiper stickyfunc-enhance sr-speedbar smartparens smart-mode-line rainbow-delimiters pythonic malinka magit loc-changes load-relative list-utils latex-preview-pane irony-eldoc htmlize hlinum helm-themes helm-swoop helm-projectile helm-make helm-ls-git helm-flycheck helm-ag google-c-style flycheck-irony elpy dtrt-indent cython-mode company-irony-c-headers company-irony cmake-ide cmake-font-lock clean-aindent-mode clang-format browse-kill-ring auctex)))
  '(rm-blacklist
    (quote
     (" hl-p" " SP" " Abbrev" " FA" " hs" " Helm" " wb" " WK" " yas" " company" " Irony" " ElDoc" " FlyC")))
@@ -192,6 +192,11 @@ middle"
 (add-to-list 'load-path "~/.emacs.d/elpa/regent-mode/")
 (autoload 'regent-mode "regent-mode" "regent editing mode" t)
 (add-to-list 'auto-mode-alist '("\\.rg$" . regent-mode))
+
+;; terra
+(add-to-list 'load-path "~/.emacs.d/elpa/terra-mode/")
+(autoload 'terra-mode "terra-mode" "terra editing mode" t)
+(add-to-list 'auto-mode-alist '("\\.t$" . terra-mode))
 
 ;; gdb
 (setq gdb-many-windows t

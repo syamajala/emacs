@@ -1,3 +1,9 @@
 [submodule "yasnippet-snippets"]
 	path = yasnippet-snippets
 	url = https://github.com/AndreaCrotti/yasnippet-snippets
+[submodule "elpa/regent-mode"]
+	path = elpa/regent-mode
+	url = https://github.com/StanfordLegion/regent-mode.git
+[submodule "elpa/terra-mode"]
+	path = elpa/terra-mode
+	url = https://github.com/StanfordLegion/terra-mode.git
