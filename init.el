@@ -68,7 +68,8 @@
    'package-archives
    '("melpa" . "http://melpa.org/packages/")
    t)
-    (package-initialize))
+  ;;(package-initialize)
+  )
 
 ;; custom theme
 (load-theme 'seshu)
@@ -459,7 +460,7 @@ middle"
 
 
 ;; python
-(package-initialize)
+;;(package-initialize)
 (elpy-enable)
 ;; python2
 ;; (setq python-shell-interpreter "ipython2")
@@ -489,7 +490,7 @@ middle"
 
 ;; ess-site
 (require 'ess-site)
-(require 'ess-rutils)
+;;(require 'ess-rutils)
 (setq ess-default-style 'RStudio)
 (setq ess-use-eldoc 't)
 
