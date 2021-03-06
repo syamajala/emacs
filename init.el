@@ -4,30 +4,26 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   (quote
-    ("c9fa45acd59564778b031178375261dbdc9259c9781c86e64c937ded3d8132e7" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
+   '("c9fa45acd59564778b031178375261dbdc9259c9781c86e64c937ded3d8132e7" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
  '(elpy-shell-echo-input nil)
- '(ffap-machine-p-known (quote reject))
+ '(ffap-machine-p-known 'reject)
  '(global-linum-mode t)
- '(helm-dash-browser-func (quote eww))
+ '(helm-dash-browser-func 'eww)
  '(helm-make-build-dir "/build")
  '(helm-swoop-split-with-multiple-windows t)
  '(linum-format "%d ")
  '(linum-highlight-in-all-buffersp nil)
- '(org-html-htmlize-output-type (quote css))
+ '(org-html-htmlize-output-type 'css)
  '(org-org-htmlized-css-url "static/worg.css")
  '(package-selected-packages
-   (quote
-    (eyebrowse window-numbering helm-c-yasnippet yasnippet-snippets markdown-mode cl-lib ess csv-mode dumb-jump helm-descbinds vue-mode nodejs-repl js2-mode company-tern w3m helm-dash web-mode ws-butler window-layout which-key test-simple swiper stickyfunc-enhance sr-speedbar smartparens smart-mode-line rainbow-delimiters pythonic malinka magit loc-changes load-relative list-utils latex-preview-pane irony-eldoc htmlize hlinum helm-themes helm-swoop helm-projectile helm-make helm-ls-git helm-flycheck helm-ag google-c-style flycheck-irony elpy dtrt-indent cython-mode company-irony-c-headers company-irony cmake-ide cmake-font-lock clean-aindent-mode clang-format browse-kill-ring auctex)))
+   '(yaml-mode eyebrowse window-numbering helm-c-yasnippet yasnippet-snippets markdown-mode cl-lib ess csv-mode dumb-jump helm-descbinds vue-mode nodejs-repl js2-mode company-tern w3m helm-dash web-mode ws-butler window-layout which-key test-simple swiper stickyfunc-enhance sr-speedbar smartparens smart-mode-line rainbow-delimiters pythonic malinka magit loc-changes load-relative list-utils latex-preview-pane irony-eldoc htmlize hlinum helm-themes helm-swoop helm-projectile helm-make helm-ls-git helm-flycheck helm-ag google-c-style flycheck-irony elpy dtrt-indent cython-mode company-irony-c-headers company-irony cmake-ide cmake-font-lock clean-aindent-mode clang-format browse-kill-ring auctex))
  '(rm-blacklist
-   (quote
-    (" hl-p" " SP" " Abbrev" " FA" " hs" " Helm" " wb" " WK" " yas" " company" " Irony" " ElDoc" " FlyC")))
+   '(" hl-p" " SP" " Abbrev" " FA" " hs" " Helm" " wb" " WK" " yas" " company" " Irony" " ElDoc" " FlyC"))
  '(safe-local-variable-values
-   (quote
-    ((irony-additional-clang-options "-std=c++14")
+   '((irony-additional-clang-options "-std=c++14")
      (cmake-ide-build-dir . "/home/seshu/dev/bioswarm++/build")
      (cmake-ide-build-dir . "/home/seshu/dev/cppweb/build")
-     (cmake-ide-build-dir . "/home/seshu/dev/NumericalMethods/build"))))
+     (cmake-ide-build-dir . "/home/seshu/dev/NumericalMethods/build")))
  '(sml/vc-mode-show-backend t)
  '(window-numbering-mode t))
 (custom-set-faces
@@ -55,6 +51,7 @@
  '(rainbow-delimiters-depth-5-face ((t (:foreground "magenta"))))
  '(rainbow-delimiters-depth-7-face ((t (:foreground "cyan"))))
  '(region ((t (:background "brightblack"))))
+ '(smerge-refined-added ((t (:inherit smerge-refined-change :background "#22aa22" :foreground "black"))))
  '(window-numbering-face ((t (:foreground "brightred"))) t))
 
 ;; no menu or welcome

@@ -1,4 +1,6 @@
-((magit-commit nil)
+((magit-blame
+  ("-w"))
+ (magit-commit nil)
  (magit-diff
   (("--" "ami/worker.py")))
  (magit-dispatch nil)
