@@ -16,7 +16,7 @@
  '(org-html-htmlize-output-type 'css)
  '(org-org-htmlized-css-url "static/worg.css")
  '(package-selected-packages
-   '(yaml-mode eyebrowse window-numbering helm-c-yasnippet yasnippet-snippets markdown-mode cl-lib ess csv-mode dumb-jump helm-descbinds vue-mode nodejs-repl js2-mode company-tern w3m helm-dash web-mode ws-butler window-layout which-key test-simple swiper stickyfunc-enhance sr-speedbar smartparens smart-mode-line rainbow-delimiters pythonic malinka magit loc-changes load-relative list-utils latex-preview-pane irony-eldoc htmlize hlinum helm-themes helm-swoop helm-projectile helm-make helm-ls-git helm-flycheck helm-ag google-c-style flycheck-irony elpy dtrt-indent cython-mode company-irony-c-headers company-irony cmake-ide cmake-font-lock clean-aindent-mode clang-format browse-kill-ring auctex))
+   '(yaml-mode eyebrowse window-numbering helm-c-yasnippet yasnippet-snippets markdown-mode cl-lib csv-mode dumb-jump helm-descbinds nodejs-repl js2-mode company-tern w3m helm-dash web-mode ws-butler window-layout which-key test-simple swiper stickyfunc-enhance sr-speedbar smartparens smart-mode-line rainbow-delimiters pythonic malinka magit loc-changes load-relative list-utils latex-preview-pane irony-eldoc htmlize hlinum helm-themes helm-swoop helm-projectile helm-make helm-ls-git helm-flycheck helm-ag google-c-style flycheck-irony elpy dtrt-indent cython-mode company-irony-c-headers company-irony cmake-ide cmake-font-lock clean-aindent-mode clang-format browse-kill-ring auctex))
  '(rm-blacklist
    '(" hl-p" " SP" " Abbrev" " FA" " hs" " Helm" " wb" " WK" " yas" " company" " Irony" " ElDoc" " FlyC"))
  '(safe-local-variable-values
@@ -44,8 +44,6 @@
  '(helm-swoop-target-line-face ((t (:background "yellow" :foreground "#222222"))))
  '(helm-swoop-target-word-face ((t (:background "magenta" :foreground "#ffffff"))))
  '(linum-highlight-face ((t (:inherit default :background "color-235" :foreground "brightred"))))
- '(mode-line ((t (:background "color-235" :inverse-video nil))))
- '(mode-line-inactive ((t (:background "color-235" :inverse-video nil))))
  '(rainbow-delimiters-depth-2-face ((t (:foreground "blue"))))
  '(rainbow-delimiters-depth-4-face ((t (:foreground "green"))))
  '(rainbow-delimiters-depth-5-face ((t (:foreground "magenta"))))
@@ -479,17 +477,8 @@ middle"
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (define-key web-mode-map (kbd "C-c @ C-c") 'web-mode-fold-or-unfold)
 
-;; vue
-(add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode))
-
 ;; dumb-jump
 (dumb-jump-mode)
-
-;; ess-site
-(require 'ess-site)
-;;(require 'ess-rutils)
-(setq ess-default-style 'RStudio)
-(setq ess-use-eldoc 't)
 
 ;; markdown
 (setq markdown-command "pandoc")

@@ -1,0 +1,14 @@
+;; Emacs-W3 HTTP cookies file
+;; Automatically generated file!!! DO NOT EDIT!!!
+
+(setq url-cookie-storage
+ '(("localhost"
+  [url-cookie "username-localhost-8888" "2|1:0|10:1616078437|23:username-localhost-8888|44:OWU3OWNhMWIzZGI4NDE4MmIyNGRhM2NmMjlhOTM5ODI=|0697fdd08dc19d6f7e2b45966e292057ba9b5909490890acaf2e4b75d8a9f698" "Sat, 17 Apr 2021 14:40:37 GMT" "/" "localhost" nil]))
+)
+(setq url-cookie-secure-storage
+ 'nil)
+
+;; Local Variables:
+;; version-control: never
+;; no-byte-compile: t
+;; End:
