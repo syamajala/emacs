@@ -4,58 +4,24 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("c9fa45acd59564778b031178375261dbdc9259c9781c86e64c937ded3d8132e7" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
- '(elpy-shell-echo-input nil)
- '(ffap-machine-p-known 'reject)
- '(global-linum-mode t)
- '(helm-dash-browser-func 'eww)
- '(helm-make-build-dir "/build")
- '(helm-swoop-split-with-multiple-windows t)
- '(linum-format "%d ")
- '(linum-highlight-in-all-buffersp nil)
- '(org-html-htmlize-output-type 'css)
- '(org-org-htmlized-css-url "static/worg.css")
+   '("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
  '(package-selected-packages
-   '(yaml-mode eyebrowse window-numbering helm-c-yasnippet yasnippet-snippets markdown-mode cl-lib csv-mode dumb-jump helm-descbinds nodejs-repl js2-mode company-tern w3m helm-dash web-mode ws-butler window-layout which-key test-simple swiper stickyfunc-enhance sr-speedbar smartparens smart-mode-line rainbow-delimiters pythonic malinka magit loc-changes load-relative list-utils latex-preview-pane irony-eldoc htmlize hlinum helm-themes helm-swoop helm-projectile helm-make helm-ls-git helm-flycheck helm-ag google-c-style flycheck-irony elpy dtrt-indent cython-mode company-irony-c-headers company-irony cmake-ide cmake-font-lock clean-aindent-mode clang-format browse-kill-ring auctex))
+   '(web-mode projectile-speedbar sr-speedbar rainbow-delimiters ws-butler dtrt-indent helm-projectile projectile rust-mode company dap-mode flycheck helm-flycheck helm-lsp lsp-mode lsp-ui which-key helm-swoop helm-ag smart-mode-line helm magit smartparens clean-aindent-mode cmake-mode cuda-mode lua-mode hlinum window-number use-package))
  '(rm-blacklist
-   '(" hl-p" " SP" " Abbrev" " FA" " hs" " Helm" " wb" " WK" " yas" " company" " Irony" " ElDoc" " FlyC"))
- '(safe-local-variable-values
-   '((irony-additional-clang-options "-std=c++14")
-     (cmake-ide-build-dir . "/home/seshu/dev/bioswarm++/build")
-     (cmake-ide-build-dir . "/home/seshu/dev/cppweb/build")
-     (cmake-ide-build-dir . "/home/seshu/dev/NumericalMethods/build")))
- '(sml/vc-mode-show-backend t)
- '(window-numbering-mode t))
+   '(" hl-p" " SP" " Abbrev" " FA" " hs" " Helm" " wb" " WK" " yas" " company" " Irony" " ElDoc" " FlyC" " Lens" " dtrt-indent" " ARev")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ediff-even-diff-Ancestor ((t (:background "Grey" :foreground "black"))))
- '(ediff-even-diff-B ((t (:background "Grey" :foreground "black"))))
- '(ediff-fine-diff-A ((t (:background "red" :foreground "black"))))
- '(ediff-fine-diff-B ((t (:background "green" :foreground "black"))))
- '(ediff-fine-diff-C ((t (:background "yellow" :foreground "black"))))
- '(ediff-odd-diff-A ((t (:background "Grey" :foreground "black"))))
- '(ediff-odd-diff-C ((t (:background "Grey" :foreground "black"))))
- '(helm-grep-file ((t (:foreground "magenta" :underline t))))
- '(helm-selection ((t (:background "brightblack" :foreground "brightyellow"))))
- '(helm-source-header ((t (:background "color-235" :foreground "white" :weight bold :height 1.3 :family "Sans Serif"))))
- '(helm-swoop-target-line-face ((t (:background "yellow" :foreground "#222222"))))
- '(helm-swoop-target-word-face ((t (:background "magenta" :foreground "#ffffff"))))
- '(linum-highlight-face ((t (:inherit default :background "color-235" :foreground "brightred"))))
- '(rainbow-delimiters-depth-2-face ((t (:foreground "blue"))))
- '(rainbow-delimiters-depth-4-face ((t (:foreground "green"))))
- '(rainbow-delimiters-depth-5-face ((t (:foreground "magenta"))))
- '(rainbow-delimiters-depth-7-face ((t (:foreground "cyan"))))
- '(region ((t (:background "brightblack"))))
- '(smerge-refined-added ((t (:inherit smerge-refined-change :background "#22aa22" :foreground "black"))))
- '(window-numbering-face ((t (:foreground "brightred"))) t))
+ )
 
 ;; no menu or welcome
 (menu-bar-mode -1)
-(tool-bar-mode -1)
 (setq inhibit-startup-message t)
+
+;; custom theme
+;;(load-theme 'seshu)
 
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -66,8 +32,11 @@
   ;;(package-initialize)
   )
 
-;; custom theme
-(load-theme 'seshu)
+;; This is only needed once, near the top of the file
+(eval-when-compile
+  ;; Following line is not needed if use-package.el is in ~/.emacs.d
+  ;;(add-to-list 'load-path "<path where use-package is installed>")
+  (require 'use-package))
 
 ;; window switching
 (global-set-key (kbd "C-c l") 'windmove-left)
@@ -77,69 +46,6 @@
 
 ;; winner-mode
 (winner-mode)
-
-(defun win-resize-top-or-bot ()
-  "Figure out if the current window is on top, bottom or in the
-middle"
-  (let* ((win-edges (window-edges))
-	 (this-window-y-min (nth 1 win-edges))
-	 (this-window-y-max (nth 3 win-edges))
-	 (fr-height (frame-height)))
-    (cond
-     ((eq 0 this-window-y-min) "top")
-     ((eq (- fr-height 1) this-window-y-max) "bot")
-     (t "mid"))))
-
-(defun win-resize-left-or-right ()
-  "Figure out if the current window is to the left, right or in the
-middle"
-  (let* ((win-edges (window-edges))
-	 (this-window-x-min (nth 0 win-edges))
-	 (this-window-x-max (nth 2 win-edges))
-	 (fr-width (frame-width)))
-    (cond
-     ((eq 0 this-window-x-min) "left")
-     ((eq (+ fr-width 4) this-window-x-max) "right")
-     (t "mid"))))
-
-(defun win-resize-enlarge-horiz ()
-  (interactive)
-  (cond
-   ((equal "top" (win-resize-top-or-bot)) (enlarge-window -1))
-   ((equal "bot" (win-resize-top-or-bot)) (enlarge-window 1))
-   ((equal "mid" (win-resize-top-or-bot)) (enlarge-window -1))
-   (t (message "nil"))))
-
-(defun win-resize-minimize-horiz ()
-  (interactive)
-  (cond
-   ((equal "top" (win-resize-top-or-bot)) (enlarge-window 1))
-   ((equal "bot" (win-resize-top-or-bot)) (enlarge-window -1))
-   ((equal "mid" (win-resize-top-or-bot)) (enlarge-window 1))
-   (t (message "nil"))))
-
-(defun win-resize-enlarge-vert ()
-  (interactive)
-  (cond
-   ((equal "left" (win-resize-left-or-right)) (enlarge-window-horizontally -1))
-   ((equal "right" (win-resize-left-or-right)) (enlarge-window-horizontally 1))
-   ((equal "mid" (win-resize-left-or-right)) (enlarge-window-horizontally -1))))
-
-(defun win-resize-minimize-vert ()
-  (interactive)
-  (cond
-   ((equal "left" (win-resize-left-or-right)) (enlarge-window-horizontally 1))
-   ((equal "right" (win-resize-left-or-right)) (enlarge-window-horizontally -1))
-   ((equal "mid" (win-resize-left-or-right)) (enlarge-window-horizontally 1))))
-
-(global-set-key [C-M-down] 'win-resize-minimize-vert)
-(global-set-key [C-M-up] 'win-resize-enlarge-vert)
-(global-set-key [C-M-left] 'win-resize-minimize-horiz)
-(global-set-key [C-M-right] 'win-resize-enlarge-horiz)
-(global-set-key [C-M-up] 'win-resize-enlarge-horiz)
-(global-set-key [C-M-down] 'win-resize-minimize-horiz)
-(global-set-key [C-M-left] 'win-resize-enlarge-vert)
-(global-set-key [C-M-right] 'win-resize-minimize-vert)
 
 (defun toggle-window-split ()
   (interactive)
@@ -169,113 +75,54 @@ middle"
 (global-set-key (kbd "C-c \\") 'toggle-window-split)
 
 ;; window number
-(window-numbering-mode)
-;; (require 'window-number)
-;; (window-number-mode 1)
-;; (window-number-meta-mode 1)
+(use-package window-number
+  :config
+  (window-number-mode 1)
+  (window-number-meta-mode 1))
 
 ;; hlinum
-(require 'hlinum)
-(hlinum-activate)
-(setq linum-format "%d ")
-(global-linum-mode 1)
+(use-package hlinum
+  :config
+  (hlinum-activate)
+  (setq linum-format "%d ")
+  (global-linum-mode 1))
 
 ;; lua
-(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
-(add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
+(use-package lua-mode
+  :mode "\\.lua\\'"
+  :interpreter "lua")
 
 ;; regent
-(add-to-list 'load-path "~/.emacs.d/elpa/regent-mode/")
-(autoload 'regent-mode "regent-mode" "regent editing mode" t)
-(add-to-list 'auto-mode-alist '("\\.rg$" . regent-mode))
+(use-package regent-mode
+  :load-path "elpa/regent-mode/"
+  :mode "\\.rg\\'")
 
 ;; terra
-(add-to-list 'load-path "~/.emacs.d/elpa/terra-mode/")
-(autoload 'terra-mode "terra-mode" "terra editing mode" t)
-(add-to-list 'auto-mode-alist '("\\.t$" . terra-mode))
+(use-package terra-mode
+  :load-path "elpa/terra-mode/"
+  :mode "\\.t\\'")
+
+;; rust
+(use-package rust-mode
+  :mode "\\.rs\\'")
 
 ;; gdb
 (setq gdb-many-windows t
       gdb-show-main t)
 
-;; sml
-(setq sml/theme 'respectful)
-(sml/setup)
-
 ;; cuda
-(add-to-list 'auto-mode-alist '("\\.cu\\'" . c++-mode))
+(use-package cuda-mode
+  :mode "\\.cu")
 
 ;; c-style
 (setq c-default-style "bsd")
 (setq-default c-basic-offset 2)
 
-;; rtags
-(require 'rtags)
-(require 'company-rtags)
-(require 'flycheck-rtags)
-(require 'helm-rtags)
-
-(setq rtags-autostart-diagnostics t)
-(rtags-diagnostics)
-(setq rtags-completions-enabled t)
-(setq rtags-display-result-backend 'helm)
-(rtags-enable-standard-keybindings)
-
-;; cmake-ide
-(cmake-ide-setup)
-
-;; malinka
-;; (require 'malinka)
-;; (add-hook 'c-mode-common-hook 'malinka-mode)
-
 ;; cmake
-(require 'cmake-mode)
+(use-package cmake-mode
+  :mode "CMakeLists\\.txt\\'"
+  :hook (cmake-mode . cmake-font-lock-activate))
 
-(setq auto-mode-alist
-      (append
-       '(("CMakeLists\\.txt\\'" . cmake-mode))
-       '(("\\.cmake\\'" . cmake-mode))
-       auto-mode-alist))
-
-;; cmake-font-lock
-(add-hook 'cmake-mode-hook 'cmake-font-lock-activate)
-
-;; irony
-(add-hook 'c++-mode-hook 'irony-mode)
-(add-hook 'c-mode-hook 'irony-mode)
-(add-hook 'objc-mode-hook 'irony-mode)
-
-(defun my-irony-mode-hook ()
-  (define-key irony-mode-map [remap completion-at-point]
-    'irony-completion-at-point-async)
-  (define-key irony-mode-map [remap complete-symbol]
-    'irony-completion-at-point-async))
-
-(add-hook 'irony-mode-hook 'my-irony-mode-hook)
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-(add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
-
-;; company
-(require 'company-irony-c-headers)
-(add-hook 'after-init-hook 'global-company-mode)
-
-(setq company-idle-delay 0)
-
-(define-key c-mode-map [(tab)] 'company-complete)
-(define-key c++-mode-map [(tab)] 'company-complete)
-(setq company-backends (delete 'company-semantic company-backends))
-(eval-after-load 'company
-  '(add-to-list
-    'company-backends '(company-irony-c-headers company-irony company-rtags company-yasnippet company-tern)))
-
-;; flycheck-mode
-(add-hook 'c++-mode-hook 'flycheck-mode)
-(add-hook 'c-mode-hook 'flycheck-mode)
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
-
-;; eldoc
-(add-hook 'irony-mode-hook 'irony-eldoc)
 
 ;; whitespace
 ;; (global-set-key (kbd "C-c w") 'whitespace-mode)
@@ -284,207 +131,155 @@ middle"
 (setq-default tab-width 4)
 
 ;; clean-aindent
-(require 'clean-aindent-mode)
-(add-hook 'prog-mode-hook 'clean-aindent-mode)
-(define-key global-map (kbd "RET") 'newline-and-indent)
+(use-package clean-aindent-mode
+  :bind ([?\r] . 'newline-and-indent)
+  :hook (prog-mode . clean-aindent-mode))
 
 ;; smartparens
-(require 'smartparens-config)
-(show-smartparens-global-mode +1)
-(smartparens-global-mode 1)
-
-;; when you press RET, the curly braces automatically
-;; add another newline
-(sp-with-modes '(c-mode c++-mode)
-  (sp-local-pair "{" nil :post-handlers '(("||\n[i]" "RET")))
-  (sp-local-pair "/*" "*/" :post-handlers '((" | " "SPC")
-                                            ("* ||\n[i]" "RET"))))
+(use-package smartparens-config
+  :config
+  (show-smartparens-global-mode +1)
+  (smartparens-global-mode 1)
+  ;; when you press RET, the curly braces automatically
+  ;; add another newline
+  (sp-with-modes '(c-mode c++-mode)
+    (sp-local-pair "{" nil :post-handlers '(("||\n[i]" "RET")))
+    (sp-local-pair "/*" "*/" :post-handlers '((" | " "SPC")
+                                              ("* ||\n[i]" "RET")))))
 
 ;; magit
-(global-set-key (kbd "C-x g") 'magit-status)
+(use-package magit
+  :bind ("C-x g" . 'magit-status))
+
+;; sml
+(use-package smart-mode-line
+  :config
+  (setq sml-theme 'respectful)
+  (sml/setup))
 
 ;; helm
-(require 'helm)
-(require 'helm-config)
-(require 'helm-grep)
+(use-package helm
+  :bind
+  (("M-x" . helm-M-x)
+   ("M-y" . helm-show-kill-ring)
+   ("C-x b" . helm-mini)
+   ("C-x C-f" . helm-find-files)
+   ("C-h <SPC>" . helm-all-mark-rings)
+   ("C-c h o" . helm-occur)
+   ("C-c h x" . helm-register)
+   ([remap list-buffers helm-buffers-list])
+   (:map helm-map
+	 ("<tab>" . helm-execute-persistent-action)
+	 ("C-i" . helm-execute-persistent-action)
+	 ("C-z" . helm-select-action))
+   (:map minibuffer-local-map
+	 ("M-p" . helm-minibuffer-history)
+	 ("M-n" . helm-minibuffer-history)))
+  :config
+  (setq
+   helm-scroll-amount 4 ; scroll 4 lines other window using M-<next>/M-<prior>
+   helm-ff-search-library-in-sexp t ; search for library in `require' and `declare-function' sexp.
+   helm-split-window-in-side-p t ;; open helm buffer inside current window, not occupy whole other window
+   helm-candidate-number-limit 500 ; limit the number of displayed canidates
+   helm-ff-file-name-history-use-recentf t
+   helm-move-to-line-cycle-in-source t ; move to end or beginning of source when reaching top or bottom of source.
+   helm-buffers-fuzzy-matching t ; fuzzy matching buffer names when non-nil
+   helm-M-x-fuzzy-match t ; useful in helm-mini that lists buffers
+   ;; helm-follow-mode-persistent t
+   ;; helm-ag-use-temp-buffer t
+   ;; helm-mode-fuzzy-match t
+   ;; helm-completion-in-region-fuzzy-match t
+   )
+  (helm-autoresize-mode 1)
+  (helm-mode 1))
 
-;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
-;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
-;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
-(global-set-key (kbd "C-c h") 'helm-command-prefix)
-(global-unset-key (kbd "C-x c"))
+;; helm-grep
+(use-package helm-grep
+  :after helm
+  :bind ((:map helm-grep-mode-map
+	 ("<return>" . helm-grep-mode-jump-other-window)
+	 ("n" . helm-grep-mode-jump-other-window-forward)
+	 ("p" . helm-grep-mode-jump-other-window-backward))))
 
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebihnd tab to do persistent action
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
-
-(define-key helm-grep-mode-map (kbd "<return>")  'helm-grep-mode-jump-other-window)
-(define-key helm-grep-mode-map (kbd "n")  'helm-grep-mode-jump-other-window-forward)
-(define-key helm-grep-mode-map (kbd "p")  'helm-grep-mode-jump-other-window-backward)
-
-(when (executable-find "curl")
-  (setq helm-google-suggest-use-curl-p t))
-
-(setq
- helm-scroll-amount 4 ; scroll 4 lines other window using M-<next>/M-<prior>
- helm-ff-search-library-in-sexp t ; search for library in `require' and `declare-function' sexp.
- helm-split-window-in-side-p t ;; open helm buffer inside current window, not occupy whole other window
- helm-candidate-number-limit 500 ; limit the number of displayed canidates
- helm-ff-file-name-history-use-recentf t
- helm-move-to-line-cycle-in-source t ; move to end or beginning of source when reaching top or bottom of source.
- helm-buffers-fuzzy-matching t ; fuzzy matching buffer names when non-nil
-                                        ; useful in helm-mini that lists buffers
- helm-M-x-fuzzy-match t
- ;; helm-follow-mode-persistent t
- ;; helm-ag-use-temp-buffer t
- ;; helm-mode-fuzzy-match t
- ;; helm-completion-in-region-fuzzy-match t
- )
-
-(add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
-
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "M-y") 'helm-show-kill-ring)
-(global-set-key (kbd "C-x b") 'helm-mini)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
-(global-set-key (kbd "C-c h o") 'helm-occur)
-
-(global-set-key (kbd "C-c h C-c w") 'helm-wikipedia-suggest)
-
-(global-set-key (kbd "C-c h x") 'helm-register)
-;; (global-set-key (kbd "C-x r j") 'jump-to-register)
-
-(define-key 'help-command (kbd "C-f") 'helm-apropos)
-(define-key 'help-command (kbd "r") 'helm-info-emacs)
-(define-key 'help-command (kbd "C-l") 'helm-locate-library)
-
-;; use helm to list eshell history
-(add-hook 'eshell-mode-hook
-          #'(lambda ()
-              (define-key eshell-mode-map (kbd "M-l")  'helm-eshell-history)))
-
-;;; Save current position to mark ring
-(add-hook 'helm-goto-line-before-hook 'helm-save-current-pos-to-mark-ring)
-
-;; show minibuffer history with Helm
-(define-key minibuffer-local-map (kbd "M-p") 'helm-minibuffer-history)
-(define-key minibuffer-local-map (kbd "M-n") 'helm-minibuffer-history)
-
-(define-key global-map [remap find-tag] 'helm-etags-select)
-
-(define-key global-map [remap list-buffers] 'helm-buffers-list)
-
-(helm-autoresize-mode 1)
-(helm-mode 1)
 
 ;; helm-swoop
-;; Locate the helm-swoop folder to your path
-(require 'helm-swoop)
+(use-package helm-swoop
+  :after helm
+  :bind (("C-c h o" . helm-swoop)
+	 ("C-c t" . helm-multi-swoop-all)
+	 (:map isearch-mode-map
+	       ("M-i" . helm-swoop-from-isearch)))
+  :bind-keymap (("M-i" . helm-multi-swoop-all-from-helm-swoop))
+  :config
+  (setq helm-multi-swoop-edit-save t ;; Save buffer when helm-multi-swoop-edit complete
+	helm-swoop-split-with-multiple-windows t ;; split window inside the current window
+	helm-swoop-split-direction 'split-window-vertically ;;'split-window-vertically or 'split-window-horizontally
+	))
 
-;; Change the keybinds to whatever you like :)
-(global-set-key (kbd "C-c h o") 'helm-swoop)
-(global-set-key (kbd "C-c t") 'helm-multi-swoop-all)
+;; company
+(use-package company-mode
+  :hook (prog-mode . company-mode))
 
-;; When doing isearch, hand the word over to helm-swoop
-(define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
+;; lsp
+(use-package lsp-mode
+  :hook ((lsp-mode . (lambda ()
+                      (let ((lsp-keymap-prefix "C-c l"))
+                        (lsp-enable-which-key-integration))))
+         (prog-mode . lsp-mode))
+  :bind ((:map lsp-mode-map ("C-c l" . lsp-command-map)))
+  :config
+  (defun reset-lsp-blacklist ()
+    (setf (lsp-session-folders-blocklist (lsp-session)) nil)
+    (lsp--persist-session (lsp-session))))
 
-;; From helm-swoop to helm-multi-swoop-all
-(define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
+;; use python-lsp-server
 
-;; Save buffer when helm-multi-swoop-edit complete
-(setq helm-multi-swoop-edit-save t)
+;; lsp-ui
+(use-package lsp-ui
+  :after lsp-mode)
 
-;; If this value is t, split window inside the current window
-(setq helm-swoop-split-with-multiple-windows t)
+;; helm-lsp
+(use-package helm-lsp
+  :after (helm lsp-mode))
 
-;; Split direcion. 'split-window-vertically or 'split-window-horizontally
-(setq helm-swoop-split-direction 'split-window-vertically)
+;; dap
+(use-package dap-mode)
 
-;; If nil, you can slightly boost invoke speed in exchange for text color
-;;(setq helm-swoop-speed-or-color t)
-
-;; helm-flycheck
-(require 'helm-flycheck)
-
-;; helm-dash
-(setq helm-dash-common-docsets '("Python 3" "C++"))
-
-
-;; projectile
-(projectile-global-mode)
-(setq projectile-completion-system 'helm)
-(helm-projectile-on)
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+;; dap-python
+(use-package dap-python
+  :after dap-mode
+  :config (setq dap-python-debugger 'debugpy))
 
 ;; hs-minor-mode
-(add-hook 'c-mode-common-hook 'hs-minor-mode)
-(add-hook 'python-mode-hook 'hs-minor-mode)
-
-;; stickyfunc-enhance
-(add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)
-(setq semantic-default-submodes (delete 'semanticdb semantic-default-submodes))
-(semantic-mode 1)
-(require 'stickyfunc-enhance)
-(global-semantic-stickyfunc-mode)
+(add-hook 'prog-mode-hook 'hs-minor-mode)
 
 ;; dtrt-indent
-(require 'dtrt-indent)
-(dtrt-indent-mode 1)
-(setq dtrt-indent-verbosity 0)
+(use-package dtrt-indent
+  :config
+  (dtrt-indent-mode 1)
+  (setq dtrt-indent-verbosity 0))
 
 ;; ws-butler
-(require 'ws-butler)
-;; (add-hook 'c-mode-common-hook 'ws-butler-mode)
-(ws-butler-global-mode)
+(use-package ws-butler
+  :config
+  (ws-butler-global-mode))
 
 ;; which-key
-(require 'which-key)
-(which-key-mode)
-
-;; yasnippet
-(require 'yasnippet)
-(require 'yasnippet-snippets)
-(yas-reload-all)
-(add-hook 'c-mode-common-hook 'yas-minor-mode)
-(add-hook 'python-mode 'yas-minor-mode)
-;;(yas-global-mode 1)
-(require 'helm-c-yasnippet)
-(setq helm-yas-space-match-any-greedy t)
-(global-set-key (kbd "C-c y") 'helm-yas-complete)
-
-
-;; python
-;;(package-initialize)
-(elpy-enable)
-;; python2
-;; (setq python-shell-interpreter "ipython2")
-;; (setq elpy-rpc-python-command "python2")
-;;python3
-;;(elpy-use-ipython)
-(setq python-shell-interpreter "ipython" python-shell-interpreter-args "--simple-prompt --pprint")
+(use-package which-key
+  :config
+  (which-key-mode))
 
 ;; rainbow delimiters
-(require 'rainbow-delimiters)
-(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; speedbar
-(require 'sr-speedbar)
-(global-set-key (kbd "C-c s") 'sr-speedbar-toggle)
+(use-package sr-speedbar
+  :bind (("C-c s" . sr-speedbar-toggle)))
 
-;; web-mode
-(require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-(define-key web-mode-map (kbd "C-c @ C-c") 'web-mode-fold-or-unfold)
-
-;; dumb-jump
-(dumb-jump-mode)
-
-;; markdown
-(setq markdown-command "pandoc")
-
-;; window config
-(eyebrowse-mode t)
+(use-package web-mode
+  :mode "\\.html\\'"
+  :bind ((:map web-mode-map ("C-c @ C-c" . web-mode-fold-or-unfold))))
 
 ;; gc-cons
 (defun my-minibuffer-setup-hook ()
@@ -532,3 +327,4 @@ middle"
                   week))
       (message "%s" file)
       (delete-file file))))
+
