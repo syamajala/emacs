@@ -8,3 +8,5 @@ backups
 bookmarks
 __pycache__
 tramp
+.lsp-session-v1
+.cache
