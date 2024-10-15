@@ -5,9 +5,9 @@
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes '(smart-mode-line-respectful))
  '(custom-safe-themes
-   '("d2b80dd4995f33bb2b720e886d2f2def9ab1a5e82691a2f5b99d6811cc194028" "288482f5c627c1fe5a1d26fcc17ec6ca8837f36bf940db809895bf3f8e2e4edd" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "c12562436a8beba7b28fd8acba63d13851e30088c4a954db050e1c767cfb36f6" "c9fa45acd59564778b031178375261dbdc9259c9781c86e64c937ded3d8132e7" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
+   '("063c278e83aa631e230535f1be093fa57d0df4a2f5b7e781c6952e6145532976" "d2b80dd4995f33bb2b720e886d2f2def9ab1a5e82691a2f5b99d6811cc194028" "288482f5c627c1fe5a1d26fcc17ec6ca8837f36bf940db809895bf3f8e2e4edd" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "c12562436a8beba7b28fd8acba63d13851e30088c4a954db050e1c767cfb36f6" "c9fa45acd59564778b031178375261dbdc9259c9781c86e64c937ded3d8132e7" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
  '(package-selected-packages
-   '(flycheck-projectile smart-mode-line-atom-one-dark-theme web-mode projectile-speedbar sr-speedbar rainbow-delimiters ws-butler dtrt-indent helm-projectile projectile rust-mode company dap-mode flycheck helm-flycheck helm-lsp lsp-mode lsp-ui which-key helm-swoop helm-ag smart-mode-line helm magit smartparens clean-aindent-mode cmake-mode cuda-mode lua-mode hlinum window-number use-package))
+   '(org xterm-color flycheck-projectile smart-mode-line-atom-one-dark-theme web-mode projectile-speedbar sr-speedbar rainbow-delimiters ws-butler dtrt-indent helm-projectile projectile rust-mode company dap-mode flycheck helm-flycheck helm-lsp lsp-mode lsp-ui which-key helm-swoop helm-ag smart-mode-line helm magit smartparens clean-aindent-mode cmake-mode cuda-mode lua-mode hlinum window-number use-package))
  '(rm-blacklist
    '(" hl-p" " SP" " Abbrev" " FA" " hs" " Helm" " wb" " WK" " yas" " company" " Irony" " ElDoc" " FlyC" " Lens" " dtrt-indent" " ARev")))
 (custom-set-faces
@@ -251,6 +251,9 @@
     (lsp--persist-session (lsp-session))))
 
 ;; use python-lsp-server
+(add-hook 'python-mode-hook (lambda ()
+                              (setq python-shell-interpreter "ipython3")
+                              (setq python-shell-interpreter-args "--simple-prompt -i")))
 
 ;; lsp-ui
 (use-package lsp-ui
