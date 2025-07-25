@@ -17,14 +17,17 @@
      "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e"
      default))
  '(package-selected-packages
-   '(org xterm-color flycheck-projectile
-         smart-mode-line-atom-one-dark-theme web-mode
-         projectile-speedbar sr-speedbar rainbow-delimiters ws-butler
-         dtrt-indent helm-projectile projectile rust-mode company
-         dap-mode flycheck helm-flycheck helm-lsp lsp-mode lsp-ui
-         which-key helm-swoop helm-ag smart-mode-line helm magit
-         smartparens clean-aindent-mode cmake-mode cuda-mode lua-mode
-         hlinum window-number use-package))
+   '(clean-aindent-mode cmake-mode company cuda-mode dap-mode dtrt-indent
+                        flycheck flycheck-projectile helm helm-ag
+                        helm-flycheck helm-lsp helm-projectile
+                        helm-swoop helm-tramp hlinum lsp-mode lsp-ui
+                        lua-mode magit org projectile
+                        projectile-speedbar rainbow-delimiters
+                        rust-mode smart-mode-line
+                        smart-mode-line-atom-one-dark-theme
+                        smartparens sr-speedbar tramp use-package
+                        web-mode which-key window-number ws-butler
+                        xterm-color))
  '(rm-blacklist
    '(" hl-p" " SP" " Abbrev" " FA" " hs" " Helm" " wb" " WK" " yas"
      " company" " Irony" " ElDoc" " FlyC" " Lens" " dtrt-indent"
