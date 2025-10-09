@@ -161,6 +161,7 @@
 
 ;; smartparens
 (use-package smartparens-config
+  :hook (prog-mode . smartparens-mode)
   :config
   (show-smartparens-global-mode +1)
   (smartparens-global-mode 1)
@@ -173,7 +174,8 @@
 
 ;; magit
 (use-package magit
-  :bind ("C-x g" . 'magit-status))
+  :bind ("C-x g" . 'magit-status)
+  :defer t)
 
 ;; sml
 (use-package smart-mode-line-atom-one-dark-theme)
@@ -225,7 +227,8 @@
   :bind ((:map helm-grep-mode-map
 	 ("<return>" . helm-grep-mode-jump-other-window)
 	 ("n" . helm-grep-mode-jump-other-window-forward)
-	 ("p" . helm-grep-mode-jump-other-window-backward))))
+	 ("p" . helm-grep-mode-jump-other-window-backward)))
+  :defer t)
 
 
 ;; helm-swoop
@@ -240,7 +243,8 @@
   (setq helm-multi-swoop-edit-save t ;; Save buffer when helm-multi-swoop-edit complete
 	helm-swoop-split-with-multiple-windows t ;; split window inside the current window
 	helm-swoop-split-direction 'split-window-vertically ;;'split-window-vertically or 'split-window-horizontally
-	))
+    )
+  :defer t)
 
 ;; helm-flycheck
 (use-package helm-flycheck
@@ -249,11 +253,10 @@
 ;; projectile
 (use-package projectile
   :ensure t
-  :init
-  (projectile-mode +1)
-  :bind
-  (:map projectile-mode-map ("C-c p" . projectile-command-map))
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
   :config
+  (projectile-mode +1)
   (setq projectile-completion-system 'helm)
   (helm-projectile-on))
 
@@ -301,12 +304,14 @@
 (use-package dtrt-indent
   :config
   (dtrt-indent-mode 1)
-  (setq dtrt-indent-verbosity 0))
+  (setq dtrt-indent-verbosity 0)
+  :hook (prog-mode . dtrt-indent-mode))
 
 ;; ws-butler
 (use-package ws-butler
   :config
-  (ws-butler-global-mode))
+  (ws-butler-global-mode)
+  :hook (prog-mode . ws-butler-mode))
 
 ;; which-key
 (use-package which-key
