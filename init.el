@@ -1,3 +1,14 @@
+(setq gc-cons-threshold 100000000)
+
+;; Optimize file-name-handler during startup
+(defvar default-file-name-handler-alist file-name-handler-alist)
+(setq file-name-handler-alist nil)
+
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (setq gc-cons-threshold 16000000)  ; 16MB instead of 800KB
+            (setq file-name-handler-alist default-file-name-handler-alist)))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -17,17 +28,15 @@
      "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e"
      default))
  '(package-selected-packages
-   '(clean-aindent-mode cmake-mode company cuda-mode dap-mode dtrt-indent
-                        flycheck flycheck-projectile helm helm-ag
-                        helm-flycheck helm-lsp helm-projectile
-                        helm-swoop helm-tramp hlinum lsp-mode lsp-ui
-                        lua-mode magit org projectile
-                        projectile-speedbar rainbow-delimiters
-                        rust-mode smart-mode-line
-                        smart-mode-line-atom-one-dark-theme
-                        smartparens sr-speedbar tramp use-package
-                        web-mode which-key window-number ws-butler
-                        xterm-color))
+   '(agent-shell clean-aindent-mode cmake-mode company cuda-mode dap-mode
+                 dtrt-indent esup flycheck flycheck-projectile helm
+                 helm-ag helm-flycheck helm-lsp helm-projectile
+                 helm-swoop helm-tramp lsp-mode lsp-ui lua-mode magit
+                 org projectile projectile-speedbar rainbow-delimiters
+                 rust-mode smart-mode-line
+                 smart-mode-line-atom-one-dark-theme smartparens
+                 sr-speedbar tramp treemacs use-package web-mode
+                 which-key window-number ws-butler xterm-color))
  '(rm-blacklist
    '(" hl-p" " SP" " Abbrev" " FA" " hs" " Helm" " wb" " WK" " yas"
      " company" " Irony" " ElDoc" " FlyC" " Lens" " dtrt-indent"
@@ -38,7 +47,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(line-number-current-line ((t (:inherit line-number :background "indianred2")))))
 
 ;; no menu or welcome
 (menu-bar-mode -1)
@@ -47,14 +56,20 @@
 ;; custom theme
 (load-theme 'seshu)
 
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 (when (>= emacs-major-version 24)
   (require 'package)
   (add-to-list
    'package-archives
-   '("melpa" . "http://melpa.org/packages/")
+   '("melpa" . "https://melpa.org/packages/")
    t)
-  ;;(package-initialize)
+  (when (<= emacs-major-version 27)
+    (package-initialize)
+    (unless (package-installed-p 'use-package)
+      (package-refresh-contents)
+      (package-install 'use-package)))
   )
+
 
 ;; This is only needed once, near the top of the file
 (eval-when-compile
@@ -104,12 +119,9 @@
   (window-number-mode 1)
   (window-number-meta-mode 1))
 
-;; hlinum
-(use-package hlinum
-  :config
-  (hlinum-activate)
-  (setq linum-format "%d ")
-  (global-linum-mode 1))
+;; Modern line numbers (built-in, faster)
+(global-display-line-numbers-mode 1)
+(setq display-line-numbers-type t)  ; absolute line numbers
 
 ;; lua
 (use-package lua-mode
@@ -161,6 +173,7 @@
 
 ;; smartparens
 (use-package smartparens-config
+  :defer t
   :hook (prog-mode . smartparens-mode)
   :config
   (show-smartparens-global-mode +1)
@@ -247,12 +260,13 @@
   :defer t)
 
 ;; helm-flycheck
-(use-package helm-flycheck
-  :after helm)
+;; (use-package helm-flycheck
+;;   :after helm)
 
 ;; projectile
 (use-package projectile
   :ensure t
+  :defer 2
   :bind-keymap
   ("C-c p" . projectile-command-map)
   :config
@@ -262,16 +276,29 @@
 
 ;; company
 (use-package company-mode
+  :defer t
   :hook (prog-mode . company-mode))
 
 ;; lsp
 (use-package lsp-mode
-  :hook ((lsp-mode . (lambda ()
+  :commands (lsp lsp-deferred)
+  :hook ((python-mode . lsp-deferred)
+         (c-mode . lsp-deferred)
+         (c++-mode . lsp-deferred)
+         (lsp-mode . (lambda ()
                       (let ((lsp-keymap-prefix "C-c l"))
-                        (lsp-enable-which-key-integration))))
-         (prog-mode . lsp-mode))
+                        (lsp-enable-which-key-integration)))))
   :bind ((:map lsp-mode-map ("C-c l" . lsp-command-map)))
   :config
+  ;; Performance optimizations
+  (setq lsp-idle-delay 3                ; Wait 3s before starting LSP
+        lsp-log-io nil                  ; Don't log LSP communication
+        lsp-enable-file-watchers nil    ; Don't watch all project files
+        lsp-enable-folding nil          ; Disable code folding
+        lsp-enable-snippet t            ; Keep snippets (useful)
+        lsp-enable-symbol-highlighting t ; Keep symbol highlighting
+        lsp-headerline-breadcrumb-enable nil) ; Disable breadcrumbs
+  
   (defun reset-lsp-blacklist ()
     (setf (lsp-session-folders-blocklist (lsp-session)) nil)
     (lsp--persist-session (lsp-session))))
@@ -290,7 +317,8 @@
   :after (helm lsp-mode))
 
 ;; dap
-(use-package dap-mode)
+(use-package dap-mode
+  :defer t)
 
 ;; dap-python
 (use-package dap-python
@@ -330,6 +358,10 @@
   :mode "\\.html\\'"
   :bind ((:map web-mode-map ("C-c @ C-c" . web-mode-fold-or-unfold))))
 
+;; agent shell
+(use-package agent-shell
+  :defer t)
+
 ;; gc-cons
 (defun my-minibuffer-setup-hook ()
   (setq gc-cons-threshold most-positive-fixnum))
@@ -367,13 +399,29 @@
 
 (add-hook 'before-save-hook  'force-backup-of-buffer)
 
-(message "Deleting old backup files...")
-(let ((week (* 60 60 24 7))
-      (current (float-time (current-time))))
-  (dolist (file (directory-files temporary-file-directory t))
-    (when (and (backup-file-name-p file)
-               (> (- current (float-time (fifth (file-attributes file))))
-                  week))
-      (message "%s" file)
-      (delete-file file))))
+(run-with-idle-timer 30 nil (lambda ()
+			      (message "Deleting old backup files...")
+			      (let ((week (* 60 60 24 7))
+				    (current (float-time (current-time))))
+				(dolist (file (directory-files temporary-file-directory t))
+				  (when (and (backup-file-name-p file)
+					     (> (- current (float-time (fifth (file-attributes file))))
+						week))
+				    (message "%s" file)
+				    (delete-file file))))))
 
+;; Display startup time
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "*** Emacs loaded in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
+
+(when (and (system-name)
+           (string-match-p "^sdfiana" (system-name)))
+  (require 'server)
+  (setq server-socket-dir "/run/user/16163/emacs")
+  (unless (server-running-p)
+    (server-start)))
